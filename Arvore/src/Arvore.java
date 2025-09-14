@@ -100,6 +100,36 @@ public class Arvore {
         return raiz; //chega aqui caso a informacao nao é a que procuro, logo vai retornar o proprio nó que será usado no setDireita ou esquerda, sem modificar a estrutura, só será modifica quando informacao == raiz.getinformacao
     }
 
+    public Node removeMaiorElemento(Node raiz) {
+        if (raiz == null) {
+            return null;
+        }
+        if (raiz.getDireita() != null) {
+            raiz.setDireita(removeMaiorElemento(raiz.getDireita()));
+        } else {
+            if (raiz.getEsquerda() != null){
+                return raiz.getEsquerda();
+            }
+            return null; //se chegou aqui, é um nó folha, logo a extremidade maior da arvore, retorno ela para dar um set null no nó que chamou ela.
+        }
+        return raiz;
+    }
+
+    public Node removeMenorElemento(Node raiz) {
+        if (raiz == null) {
+            return null;
+        }
+        if (raiz.getEsquerda() != null) {
+            raiz.setEsquerda(removeMenorElemento(raiz.getEsquerda()));
+        } else {
+            if (raiz.getDireita() != null){
+                return raiz.getDireita();
+            }
+            return null; //se chegou aqui, é um nó folha, logo a extremidade menor da arvore, retorno ela para dar um set null no nó que chamou ela.
+        }
+        return raiz;
+    }
+
     public Node getArvore(){
         return Arvore;
     }
@@ -119,8 +149,38 @@ public class Arvore {
         arvorezinha.PercorrePosOrdem(arvorezinha.getArvore());
         System.out.println();
         arvorezinha.RemoveElemento(7, arvorezinha.getArvore());
+
         System.out.println("Ordem após remoção: ");
         arvorezinha.PercorreInOrdem(arvorezinha.getArvore());
+        System.out.println();
+
+        arvorezinha.removeMaiorElemento(arvorezinha.getArvore());
+        System.out.println("Removendo maior elemento");
+        arvorezinha.PercorreInOrdem(arvorezinha.getArvore());
+        System.out.println();
+
+        arvorezinha.removeMenorElemento(arvorezinha.getArvore());
+        System.out.println("Removendo menor elemento");
+        arvorezinha.PercorreInOrdem(arvorezinha.getArvore());
+        System.out.println();
+
+        arvorezinha.removeMaiorElemento(arvorezinha.getArvore());
+        System.out.println("Removendo maior elemento");
+        arvorezinha.PercorreInOrdem(arvorezinha.getArvore());
+        System.out.println();
+
+        arvorezinha.removeMaiorElemento(arvorezinha.getArvore());
+        System.out.println("Removendo maior elemento");
+        arvorezinha.PercorreInOrdem(arvorezinha.getArvore());
+        System.out.println();
+
+        arvorezinha.removeMenorElemento(arvorezinha.getArvore());
+        System.out.println("Removendo menor elemento");
+        arvorezinha.PercorreInOrdem(arvorezinha.getArvore());
+        System.out.println();
+
+
+
 
     }
 }
