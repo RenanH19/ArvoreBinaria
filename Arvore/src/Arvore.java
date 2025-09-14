@@ -60,19 +60,47 @@ public class Arvore {
         System.out.print(" - " + raiz.getInformacao() + " - ");
     }
 
-    public void RemoveElemento(int informacao){
-        Node raiz = getArvore();
-        if (raiz == null) {
-            return;
+    public int calculaAlturaPos(Node raiz){
+        if (raiz == null){
+            return -1;
         }
-        PercorreInOrdem(raiz.getEsquerda());
 
-        if (raiz.getInformacao() == informacao)
+        int alturaEsquerda = 0;
+        int alturaDireita = 0;
+        alturaEsquerda = calculaAlturaPos(raiz.getEsquerda());
+        alturaDireita = calculaAlturaPos(raiz.getDireita());
 
-        PercorreInOrdem(raiz.getDireita());
+        if (alturaDireita > alturaEsquerda){
+            return alturaDireita + 1;
+        }
+        return alturaEsquerda + 1;
     }
 
-    public Node getArvore() {
+    public Node RemoveElemento(int informacao, Node raiz) {
+        if (raiz == null) {
+            return null;
+        }
+
+        if (informacao == raiz.getInformacao()){
+            System.out.println("Localizou elemento no nó " + raiz + " " + raiz.getInformacao());
+            if (raiz.getDireita() != null){
+                return raiz.getDireita();
+            } else if(raiz.getEsquerda() != null){
+                return raiz.getEsquerda();
+            } else {
+                return null;
+            }
+        }
+
+        if (informacao > raiz.getInformacao()){
+                raiz.setDireita(RemoveElemento(informacao, raiz.getDireita()));
+        } else {
+                raiz.setEsquerda(RemoveElemento(informacao, raiz.getEsquerda()));
+        }
+        return raiz; //chega aqui caso a informacao nao é a que procuro, logo vai retornar o proprio nó que será usado no setDireita ou esquerda, sem modificar a estrutura, só será modifica quando informacao == raiz.getinformacao
+    }
+
+    public Node getArvore(){
         return Arvore;
     }
 
@@ -89,6 +117,10 @@ public class Arvore {
         arvorezinha.PercorrePreOrdem(arvorezinha.getArvore());
         System.out.println();
         arvorezinha.PercorrePosOrdem(arvorezinha.getArvore());
+        System.out.println();
+        arvorezinha.RemoveElemento(7, arvorezinha.getArvore());
+        System.out.println("Ordem após remoção: ");
+        arvorezinha.PercorreInOrdem(arvorezinha.getArvore());
 
     }
 }
